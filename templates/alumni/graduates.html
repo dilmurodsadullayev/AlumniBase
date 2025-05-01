@@ -1,0 +1,117 @@
+{% extends 'alumni/base.html' %}
+{% block title %} Bitiruvchilar ro'yxati{% endblock title %}
+
+{% block content %}
+<div class="d-flex" id="wrapper">
+    <div class="container-fluid p-4">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-between align-items-center mb-4">
+                <h2>Foydalanuvchilar</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-2">
+                <input type="text" class="form-control" name="name" id="nameSearch" placeholder="Ism bo‘yicha qidirish...">
+            </div>
+            <div class="col-md-6 mb-2">
+                <input type="text" class="form-control" name="faculty" id="facultySearch" placeholder="Yo‘nalish bo‘yicha qidirish...">
+            </div>
+        </div>
+
+        <div id="graduateResults">
+            <div class="row" id="graduateCards">
+                {% for graduate in graduates %}
+                    <div class="col-md-4 mb-4 graduate-card">
+                        <div class="card shadow-sm border-0 text-center" style="width: 26rem;">
+                            <img src="{{ graduate.image.url }}" class="card-img-top" alt="{{ graduate.first_name }} {{ graduate.last_name }}">
+                           <div class="card-body">
+                                <h5 class="card-title text-primary fw-bold">{{ graduate.first_name }} {{ graduate.last_name }}</h5>
+                                <p class="card-text d-flex align-items-center">
+                                    <i class="bi bi-mortarboard-fill me-2 text-secondary"></i>
+                                    <span>{{ graduate.faculty }}</span>
+                                </p>
+                                <p class="card-text d-flex align-items-center">
+                                    <i class="bi bi-bar-chart-line-fill me-2 text-success"></i>
+                                    <span>GPA: {{ graduate.academic_score }}</span>
+                                </p>
+                                <p class="card-text d-flex align-items-center">
+                                    <i class="bi bi-person-check-fill me-2 text-info"></i>
+                                    {% if graduate.status == 'active' %}
+                                    <span>Holati: O'qiyapti</span>
+                                    {% elif  graduate.status == 'inactive' %}
+                                    <span>Holati: Bitirgan</span>
+                                    {% else %}
+                                    <span>Holati: Haydalgan</span>
+                                    {% endif %}
+
+                                </p>
+                                <p class="card-text d-flex align-items-center">
+                                    <i class="bi bi-calendar-check-fill me-2 text-warning"></i>
+                                    <span>Tugatgan yili: {{ graduate.completed_year }}</span>
+                                </p>
+                            </div>
+
+                            <div class="card-footer bg-white border-0 pb-3">
+                                <a href="{% url 'graduate_detail' graduate.id %}" class="btn btn-primary w-75">Batafsil</a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <h3 class="text-center">No Graduate</h3>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const nameInput = document.getElementById('nameSearch');
+    const facultyInput = document.getElementById('facultySearch');
+    const graduateCards = document.getElementById('graduateCards');
+
+    function fetchResults() {
+        const name = nameInput.value.trim();
+        const faculty = facultyInput.value.trim();
+
+        fetch(`/graduate-search-ajax/?name=${encodeURIComponent(name)}&faculty=${encodeURIComponent(faculty)}`)
+            .then(response => response.json())
+            .then(data => {
+                let html = '';
+                if (data.length === 0) {
+                    html = '<h3 class="text-center">Natija topilmadi.</h3>';
+                } else {
+                    data.forEach(graduate => {
+                        html += `
+                            <div class="col-md-4 mb-4 graduate-card">
+                                <div class="card shadow-sm border-0 text-center" style="width: 26rem;">
+                                    <img src="${graduate.image_url}" class="card-img-top" alt="${graduate.first_name} ${graduate.last_name}">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-primary fw-bold">${graduate.first_name} ${graduate.last_name}</h5>
+                                        <p class="card-text">${graduate.faculty_name}</p>
+                                        <p class="card-text">GPA: ${graduate.academic_score}</p>
+                                        <p class="card-text">Status: ${graduate.status}</p>
+                                        <p class="card-text">Tugatgan yili: ${graduate.completed_year}</p>
+                                    </div>
+                                    <div class="card-footer bg-white border-0 pb-3">
+                                        <a href="/graduate/${graduate.id}/" class="btn btn-primary w-75">Batafsil</a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+                graduateCards.innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Xatolik:', error);
+            });
+    }
+
+    nameInput.addEventListener('input', fetchResults);
+    facultyInput.addEventListener('input', fetchResults);
+});
+</script>
+
+{% endblock content %}

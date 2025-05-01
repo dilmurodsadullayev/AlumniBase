@@ -1,0 +1,65 @@
+body {
+  font-family: 'Arial', sans-serif;
+}
+
+#wrapper {
+  display: flex;
+  width: 100%;
+}
+
+#sidebar-wrapper {
+  width: 250px;
+  min-height: 100vh;
+}
+
+#page-content-wrapper {
+  flex: 1;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: -250px;
+  transition: all 0.3s ease;
+}
+
+.card-body i {
+  display: block;
+  margin-bottom: 10px;
+}
+
+
+.text-primary {
+    font-size: 1.2rem;  /* Lavozim uchun kattaroq shrift */
+}
+
+.text-secondary {
+    font-size: 1rem;   /* Kompaniya nomi uchun kichikroq shrift */
+    font-style: italic; /* Kompaniya nomini kursiv qilish */
+}
+
+
+.card-header {
+    background-color: #007bff;
+    color: white;
+}
+
+.card-body {
+    background-color: #f8f9fa;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.form-control {
+    border-radius: 5px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}

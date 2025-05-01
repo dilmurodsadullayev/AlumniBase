@@ -1,0 +1,87 @@
+{% extends 'alumni/base.html' %}
+{% load humanize %}
+{% block title %} {{ graduate.first_name }} haqida to'liq ma'lumot {% endblock title %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row gy-4">
+
+        <!-- Graduate Profile -->
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 border-0 rounded-3">
+                <img src="{{ graduate.image.url }}" alt="Graduate Image"
+                     class="card-img-top rounded-top"
+                     style="height: 100%; width: 100%; object-fit: cover; object-position: top;">
+                <div class="card-body">
+                    <h4 class="card-title mb-3 text-primary">{{ graduate.first_name }} {{ graduate.last_name }}</h4>
+                    <ul class="list-unstyled small text-muted">
+                        <li><strong>Fakultet:</strong> {{ graduate.faculty.name }}</li>
+                        <li><strong>O'qish turi:</strong> {{ graduate.get_education_form_display }}</li>
+                        <li><strong>GPA:</strong> {{ graduate.academic_score }}</li>
+                        <li><strong>Status:</strong> {{ graduate.get_status_display }}</li>
+                        <li><strong>Bitirgan yil:</strong> {{ graduate.completed_year }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="col-md-8">
+            <div class="card shadow-sm h-100 border-0 rounded-3">
+                <div class="card-header bg-info text-white py-3 rounded-top">
+                    <h5 class="mb-0">📞 Aloqa ma'lumotlari</h5>
+                </div>
+                <div class="card-body">
+                    {% if graduate.graduatecontact.email %}
+                        <p><strong>Email:</strong> <a href="mailto:{{ graduate.graduatecontact.email }}">{{ graduate.graduatecontact.email }}</a></p>
+                        <p><strong>Telefon:</strong> {{ graduate.graduatecontact.phone }}</p>
+                        {% if graduate.graduatecontact.linkedin %}
+                            <p><strong>LinkedIn:</strong> <a href="{{ graduate.graduatecontact.linkedin }}" target="_blank">Profilga o'tish</a></p>
+                        {% endif %}
+                        {% if graduate.graduatecontact.telegram %}
+                            <p><strong>Telegram:</strong> <a href="{{ graduate.graduatecontact.telegram }}" target="_blank">Aloqa</a></p>
+                        {% endif %}
+                    {% else %}
+                        <p class="text-center text-muted my-4">Ma'lumotlari hali kiritilmagan.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Employment History -->
+        <div class="col-12">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-header bg-primary text-white py-3 rounded-top">
+                    <h5 class="mb-0">💼 Mehnat faoliyati</h5>
+                </div>
+                <div class="card-body">
+                    {% if employment_data %}
+                        {% for employment in employment_data %}
+                            <div class="mb-4 p-3 border-start border-4 border-primary bg-light rounded">
+                                <h5 class="text-primary">{{ employment.position }}</h5>
+                                <h6 class="text-secondary mb-2">{{ employment.company.name }}</h6>
+                                <ul class="list-unstyled small text-muted">
+                                    <li><strong>Boshlanish sanasi:</strong> {{ employment.start_date }}</li>
+                                    <li><strong>Stavka:</strong> {{ employment.get_employment_type_display }}</li>
+                                    <li><strong>Maosh:</strong> {{ employment.salary|intcomma }} so'm</li>
+                                </ul>
+                                <p>
+                                    <strong>Hozirgi holati:</strong>
+                                    {% if employment.is_current_employed %}
+                                        <span class="badge bg-success">Hozir ishlamoqda</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Ishdan chiqdi</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-center text-muted my-4">Mehnat faoliyati ma'lumotlari mavjud emas.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

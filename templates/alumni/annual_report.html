@@ -1,0 +1,105 @@
+{% extends 'alumni/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Yillik Hisobot</h1>
+
+<!-- Yilni tanlash -->
+<div class="form-group">
+    <label for="year">Yilni tanlang:</label>
+    <select id="yearSelect" class="form-control" onchange="filterByYear()">
+      {% for year in years %}
+            {% with year_str=year|date:"Y" %}
+                <option value="{{ year_str }}" {% if year_str == selected_year|stringformat:"s" %}selected{% endif %}>
+                    {{ year_str }}
+                </option>
+            {% endwith %}
+        {% endfor %}
+
+    </select>
+</div>
+
+
+    <div class="row">
+        <!-- Umumiy o'quvchilar soni -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Umumiy O'quvchilar</h4>
+                    <p>{{ total_graduates }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ishga joylashganlar -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Ishga Joylashganlar</h4>
+                    <p>{{ employed_graduates }}</p>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" style="width: {{ employed_percentage }}%">
+                            {{ employed_percentage|floatformat:2 }}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ishsizlar -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Ishsizlar</h4>
+                    <p>{{ unemployed_graduates }}</p>
+                    <div class="progress">
+                        <div class="progress-bar bg-danger" style="width: {{ unemployed_percentage }}%">
+                            {{ unemployed_percentage|floatformat:2 }}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- O'z sohasida ishlayotganlar va boshqa sohada ishlayotganlar -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4>O'z Sohasida Ishlayotganlar</h4>
+                    <p>{{ own_field_employed }}</p>
+                    <div class="progress">
+                        <div class="progress-bar bg-primary" style="width: {{ own_field_percentage }}%">
+                            {{ own_field_percentage|floatformat:2 }}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Boshqa Sohada Ishlayotganlar</h4>
+                    <p>{{ other_field_employed }}</p>
+                    <div class="progress">
+                        <div class="progress-bar bg-warning" style="width: {{ other_field_percentage }}%">
+                            {{ other_field_percentage|floatformat:2 }}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function filterByYear() {
+    var selectedYear = document.getElementById("yearSelect").value;
+    var url = new URL(window.location.href);
+    url.searchParams.set("year", selectedYear);
+    window.location.href = url.toString();
+}
+</script>
+{% endblock %}
