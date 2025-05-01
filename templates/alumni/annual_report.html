@@ -4,21 +4,19 @@
 <div class="container mt-5">
     <h1 class="mb-4">Yillik Hisobot</h1>
 
-<!-- Yilni tanlash -->
-<div class="form-group">
-    <label for="year">Yilni tanlang:</label>
-    <select id="yearSelect" class="form-control" onchange="filterByYear()">
-      {% for year in years %}
-            {% with year_str=year|date:"Y" %}
-                <option value="{{ year_str }}" {% if year_str == selected_year|stringformat:"s" %}selected{% endif %}>
-                    {{ year_str }}
-                </option>
-            {% endwith %}
-        {% endfor %}
-
-    </select>
-</div>
-
+    <!-- Yilni tanlash -->
+    <div class="form-group">
+        <label for="year">Yilni tanlang:</label>
+        <select id="yearSelect" class="form-control" onchange="filterByYear()">
+          {% for year in years %}
+                {% with year_str=year|date:"Y" %}
+                    <option value="{{ year_str }}" {% if year_str == selected_year|stringformat:"s" %}selected{% endif %}>
+                        {{ year_str }}
+                    </option>
+                {% endwith %}
+            {% endfor %}
+        </select>
+    </div>
 
     <div class="row">
         <!-- Umumiy o'quvchilar soni -->
@@ -38,7 +36,7 @@
                     <h4>Ishga Joylashganlar</h4>
                     <p>{{ employed_graduates }}</p>
                     <div class="progress">
-                        <div class="progress-bar bg-success" style="width: {{ employed_percentage }}%">
+                        <div class="progress-bar bg-success" style="width: {{ employed_percentage }}%" id="employedPercentage">
                             {{ employed_percentage|floatformat:2 }}%
                         </div>
                     </div>
@@ -53,7 +51,7 @@
                     <h4>Ishsizlar</h4>
                     <p>{{ unemployed_graduates }}</p>
                     <div class="progress">
-                        <div class="progress-bar bg-danger" style="width: {{ unemployed_percentage }}%">
+                        <div class="progress-bar bg-danger" style="width: {{ unemployed_percentage }}%" id="unemployedPercentage">
                             {{ unemployed_percentage|floatformat:2 }}%
                         </div>
                     </div>
@@ -70,7 +68,7 @@
                     <h4>O'z Sohasida Ishlayotganlar</h4>
                     <p>{{ own_field_employed }}</p>
                     <div class="progress">
-                        <div class="progress-bar bg-primary" style="width: {{ own_field_percentage }}%">
+                        <div class="progress-bar bg-primary" style="width: {{ own_field_percentage }}%" id="ownFieldPercentage">
                             {{ own_field_percentage|floatformat:2 }}%
                         </div>
                     </div>
@@ -84,7 +82,7 @@
                     <h4>Boshqa Sohada Ishlayotganlar</h4>
                     <p>{{ other_field_employed }}</p>
                     <div class="progress">
-                        <div class="progress-bar bg-warning" style="width: {{ other_field_percentage }}%">
+                        <div class="progress-bar bg-warning" style="width: {{ other_field_percentage }}%" id="otherFieldPercentage">
                             {{ other_field_percentage|floatformat:2 }}%
                         </div>
                     </div>
@@ -101,5 +99,40 @@ function filterByYear() {
     url.searchParams.set("year", selectedYear);
     window.location.href = url.toString();
 }
+
+function calculatePercentage(total, count) {
+    if (total > 0) {
+        return (count / total) * 100;
+    }
+    return 0;
+}
+
+// Kutilgan foizlarni hisoblash va to'g'ri ko'rsatish
+window.onload = function() {
+    var totalGraduates = {{ total_graduates }};
+    var employedGraduates = {{ employed_graduates }};
+    var unemployedGraduates = {{ unemployed_graduates }};
+    var ownFieldEmployed = {{ own_field_employed }};
+    var otherFieldEmployed = {{ other_field_employed }};
+
+    // Foizlarni hisoblash
+    var employedPercentage = calculatePercentage(totalGraduates, employedGraduates);
+    var unemployedPercentage = calculatePercentage(totalGraduates, unemployedGraduates);
+    var ownFieldPercentage = calculatePercentage(totalGraduates, ownFieldEmployed);
+    var otherFieldPercentage = calculatePercentage(totalGraduates, otherFieldEmployed);
+
+    // JSda foizlarni ko'rsatish
+    document.getElementById('employedPercentage').innerText = employedPercentage.toFixed(2) + "%";
+    document.getElementById('unemployedPercentage').innerText = unemployedPercentage.toFixed(2) + "%";
+    document.getElementById('ownFieldPercentage').innerText = ownFieldPercentage.toFixed(2) + "%";
+    document.getElementById('otherFieldPercentage').innerText = otherFieldPercentage.toFixed(2) + "%";
+
+    // Progress bar kengaytirish
+    document.querySelector('.progress-bar.bg-success').style.width = employedPercentage + '%';
+    document.querySelector('.progress-bar.bg-danger').style.width = unemployedPercentage + '%';
+    document.querySelector('.progress-bar.bg-primary').style.width = ownFieldPercentage + '%';
+    document.querySelector('.progress-bar.bg-warning').style.width = otherFieldPercentage + '%';
+};
 </script>
+
 {% endblock %}

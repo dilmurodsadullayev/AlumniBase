@@ -14,7 +14,7 @@
   </div>
 
   <!-- Carousel -->
-  <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+  <div id="carouselExampleFade" class="carousel slide carousel-fade mb-5" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
         <img src="{% static 'images/Ubtuit_image1.jpg' %}" class="d-block w-100" alt="...">
@@ -96,49 +96,48 @@
     </div>
 
     <div class="card shadow-sm mb-4">
-        <div class="card-body">
-            <h3 class="mb-4">Faoliyat Statusi</h3>
+       <div class="card-body">
+    <h3 class="mb-4">Faoliyat Statusi</h3>
 
-            <!-- Oliy o‘quv yurtida davom etayotganlar -->
-            <div class="mb-3">
-                <label class="form-label">Oliy o‘quv yurtida davom etayotganlar ({{ graduates_count }} / {{ graduates_count }})</label>
-                <div class="progress">
-                    <div class="progress-bar bg-primary" style="width: {{ graduates_count|floatformat:0 }}%">
-                        {{ graduates_count|floatformat:0 }}%
-                    </div>
-                </div>
-            </div>
-
-                <!-- O‘z sohasida ishlayotganlar -->
-                <div class="mb-3">
-                    <label class="form-label">O‘z sohasida ishlayotganlar ({{ ishlayotganlar }} / {{ graduates_count }})</label>
-                    <div class="progress">
-                        <div class="progress-bar bg-success" style="width: {{ ishlayotganlar|floatformat:0 }}%">
-                            {{ ishlayotganlar|floatformat:0 }}%
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Boshqa sohada ishlayotganlar -->
-                <div class="mb-3">
-                    <label class="form-label">Boshqa sohada ishlayotganlar ({{ boshqa_soha }} / {{ graduates_count }})</label>
-                    <div class="progress">
-                        <div class="progress-bar bg-warning" style="width: {{ boshqa_soha|floatformat:0 }}%">
-                            {{ boshqa_soha|floatformat:0 }}%
-                        </div>
-                    </div>
-                </div>
-
-            <!-- Ishsizlar -->
-            <div class="mb-3">
-                <label class="form-label">Ishsizlar ({{ ishsizlar_soni }} / {{ graduates_count }})</label>
-                <div class="progress">
-                    <div class="progress-bar bg-danger" style="width: {{ ishsizlar_soni|floatformat:0 }}%">
-                        {{ ishsizlar_soni|floatformat:0 }}%
-                    </div>
-                </div>
+    <!-- Oliy o‘quv yurtida davom etayotganlar -->
+    <div class="mb-3">
+        <label class="form-label">Oliy o‘quv yurtida davom etayotganlar ({{ graduates_count }} / {{ graduates_count }})</label>
+        <div class="progress">
+            <div class="progress-bar bg-primary" style="width: 100%">
+                100%
             </div>
         </div>
+    </div>
+
+<div class="mb-3">
+    <label class="form-label">O‘z sohasida ishlayotganlar ({{ ishlayotganlar }} / {{ graduates_count }})</label>
+    <div class="progress">
+        <div class="progress-bar bg-success" style="width: {{ ishlayotganlar_percent }}%">
+            {{ ishlayotganlar_percent }}%
+        </div>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Boshqa sohada ishlayotganlar ({{ boshqa_soha }} / {{ graduates_count }})</label>
+    <div class="progress">
+        <div class="progress-bar bg-warning" style="width: {{ boshqa_soha_percent }}%">
+            {{ boshqa_soha_percent }}%
+        </div>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Ishsizlar ({{ ishsizlar_soni }} / {{ graduates_count }})</label>
+    <div class="progress">
+        <div class="progress-bar bg-danger" style="width: {{ ishsizlar_percent }}%">
+            {{ ishsizlar_percent }}%
+        </div>
+    </div>
+</div>
+
+</div>
+
 
     </div>
 

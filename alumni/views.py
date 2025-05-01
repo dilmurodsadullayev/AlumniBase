@@ -28,9 +28,19 @@ def index_view(request):
     # Kompaniyalar soni
     companies_count = Company.objects.all().count()
 
+    # Boshqa sohada ishlayotganlar
     boshqa_soha = Graduate.objects.filter(
         employmentdata__is_current_employed=False
     ).distinct().count()
+
+    # Foiz hisoblash uchun funksiya
+    def get_percentage(part, total):
+        return round((part / total) * 100) if total > 0 else 0
+
+    # Foizlar
+    ishlayotganlar_percent = get_percentage(ishlayotganlar, graduates_count)
+    boshqa_soha_percent = get_percentage(boshqa_soha, graduates_count)
+    ishsizlar_percent = get_percentage(ishsizlar_soni, graduates_count)
 
     # Kontentni kontekstga joylash
     ctx = {
@@ -39,6 +49,9 @@ def index_view(request):
         'ishsizlar_soni': ishsizlar_soni,
         'companies_count': companies_count,
         'boshqa_soha': boshqa_soha,
+        'ishlayotganlar_percent': ishlayotganlar_percent,
+        'boshqa_soha_percent': boshqa_soha_percent,
+        'ishsizlar_percent': ishsizlar_percent,
     }
 
     return render(request, 'alumni/index.html', ctx)
@@ -63,36 +76,31 @@ def annual_report(request):
 
     # Bitiruvchilar soni
     total_graduates = Graduate.objects.filter(
-        completed_year__gte=start_date,
-        completed_year__lt=end_date
+        completed_year__year=selected_year  # Faqqat yilga qarash
     ).count()
 
     # Ishga joylashganlar
     employed_graduates = Graduate.objects.filter(
-        completed_year__gte=start_date,
-        completed_year__lt=end_date,
+        completed_year__year=selected_year,
         employmentdata__is_current_employed=True
     ).count()
 
     # Ishsizlar
     unemployed_graduates = Graduate.objects.filter(
-        completed_year__gte=start_date,
-        completed_year__lt=end_date,
+        completed_year__year=selected_year,
         employmentdata__isnull=True
     ).count()
 
     # O‘z sohasida ishlayotganlar
     own_field_employed = Graduate.objects.filter(
-        completed_year__gte=start_date,
-        completed_year__lt=end_date,
+        completed_year__year=selected_year,
         employmentdata__is_current_employed=True,
         employmentdata__employment_type="Own"
     ).count()
 
     # Boshqa sohada ishlayotganlar
     other_field_employed = Graduate.objects.filter(
-        completed_year__gte=start_date,
-        completed_year__lt=end_date,
+        completed_year__year=selected_year,
         employmentdata__is_current_employed=True,
         employmentdata__employment_type="Other"
     ).count()
@@ -105,7 +113,6 @@ def annual_report(request):
 
     # Faqat yilni olish uchun distinct so'rov
     years = Graduate.objects.dates('completed_year', 'year').distinct()
-    # print(years.coompleted_year)
 
     context = {
         'total_graduates': total_graduates,
@@ -122,6 +129,7 @@ def annual_report(request):
     }
 
     return render(request, 'alumni/annual_report.html', context)
+
 
 
 def graduation_view(request):
