@@ -23,7 +23,7 @@ from django.urls import re_path
 from django.views.static import serve
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('maniki/', admin.site.urls),
     path('', include('alumni.urls')),
 ]
 
