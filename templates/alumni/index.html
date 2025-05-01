@@ -4,6 +4,39 @@
 {% block content %}
 
 <div class="container-fluid p-4">
+<div class="carousel-container position-relative">
+  <!-- Social Icons -->
+  <div class="social-icons position-absolute top-50 start-0 translate-middle-y">
+    <a href="https://web.telegram.org/k/#@UBTUIT_official" target="_blank"><img src="{% static 'images/icons/telegram.png' %}" alt="Telegram"></a>
+    <a href="https://www.facebook.com/UBTUIT/" target="_blank"><img src="{% static 'images/icons/facebook.png' %}" alt="Facebook"></a>
+    <a href="https://www.instagram.com/tatuurganchfiliali_official/" target="_blank"><img src="{% static 'images/icons/instagram.png' %}" alt="Instagram"></a>
+    <a href="https://www.youtube.com/@ubtuit_official" target="_blank"><img src="{% static 'images/icons/youtube.png' %}" alt="YouTube"></a>
+  </div>
+
+  <!-- Carousel -->
+  <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'images/Ubtuit_image1.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'images/UBTUIT2.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'images/ubtuit_image2.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+
     <div class="row text-center mb-4">
         <div class="col-md-3 mb-3">
             <a href="{% url 'graduate_state' %}?type=bitiruvchilar" class="text-decoration-none text-reset">

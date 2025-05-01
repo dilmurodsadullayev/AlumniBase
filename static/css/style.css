@@ -63,3 +63,28 @@ body {
     background-color: #0056b3;
     border-color: #0056b3;
 }
+
+
+.social-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-left: 10px;
+  z-index: 10;
+}
+
+.social-icons a img {
+  width: 35px;
+  height: 35px;
+  transition: transform 0.3s;
+}
+
+.social-icons a img:hover {
+  transform: scale(1.1);
+}
+
+
+.carousel-inner img {
+  max-height: 700px; /* yoki 500px — istaganingizga qarab */
+  object-fit: cover;
+}
