@@ -6,40 +6,48 @@
 <div class="container-fluid p-4">
     <div class="row text-center mb-4">
         <div class="col-md-3 mb-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <i class="fa-solid fa-graduation-cap fa-2x text-primary" style="margin-bottom: 21px;"></i>
-                    <h5 class="card-title">Bitiruvchilar</h5>
-                    <p class="card-text fs-4">{{ graduates_count }} ta</p>
+            <a href="{% url 'graduate_state' %}?type=bitiruvchilar" class="text-decoration-none text-reset">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <i class="fa-solid fa-graduation-cap fa-2x text-primary" style="margin-bottom: 21px;"></i>
+                        <h5 class="card-title">Bitiruvchilar</h5>
+                        <p class="card-text fs-4">{{ graduates_count }} ta</p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-md-3 mb-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <i class="fa-solid fa-briefcase fa-2x text-success mb-2"></i>
-                    <h5 class="card-title">Ishga joylashgan</h5>
-                    <p class="card-text fs-4">{{ ishlayotganlar }} ta</p>
+            <a href="{% url 'graduate_state' %}?type=ishga-joylashganla" class="text-decoration-none text-reset">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <i class="fa-solid fa-briefcase fa-2x text-success mb-2"></i>
+                        <h5 class="card-title">Ishga joylashgan</h5>
+                        <p class="card-text fs-4">{{ ishlayotganlar }} ta</p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-md-3 mb-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <i class="fa-solid fa-user-times fa-2x text-danger mb-2"></i>
-                    <h5 class="card-title">Ishsizlar</h5>
-                    <p class="card-text fs-4">{{ ishsizlar_soni }} ta</p>
+            <a href="{% url 'graduate_state' %}?type=ishsizlar" class="text-decoration-none text-reset">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <i class="fa-solid fa-user-times fa-2x text-danger mb-2"></i>
+                        <h5 class="card-title">Ishsizlar</h5>
+                        <p class="card-text fs-4">{{ ishsizlar_soni }} ta</p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-md-3 mb-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <i class="fa-solid fa-building fa-2x text-warning mb-2"></i>
-                    <h5 class="card-title">Hamkorlar</h5>
-                    <p class="card-text fs-4">{{ companies_count }} ta</p>
+            <a href="{% url 'companies' %}" class="text-decoration-none text-reset">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <i class="fa-solid fa-building fa-2x text-warning mb-2"></i>
+                        <h5 class="card-title">Hamkorlar</h5>
+                        <p class="card-text fs-4">{{ companies_count }} ta</p>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 

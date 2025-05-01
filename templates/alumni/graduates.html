@@ -37,13 +37,14 @@
                                 </p>
                                 <p class="card-text d-flex align-items-center">
                                     <i class="bi bi-person-check-fill me-2 text-info"></i>
-                                    {% if graduate.status == 'active' %}
+                                   {% if graduate.status == 'active' %}
                                     <span>Holati: O'qiyapti</span>
-                                    {% elif  graduate.status == 'inactive' %}
+                                    {% elif  graduate.status == 'graduated' %}
                                     <span>Holati: Bitirgan</span>
-                                    {% else %}
+                                    {% elif graduate.status == 'expelled' %}
                                     <span>Holati: Haydalgan</span>
                                     {% endif %}
+
 
                                 </p>
                                 <p class="card-text d-flex align-items-center">

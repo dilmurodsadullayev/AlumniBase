@@ -1,3 +1,5 @@
+from urllib import request
+
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -215,6 +217,25 @@ def graduate_search_ajax(request):
     return JsonResponse(data, safe=False)
 
 
+def graduate_state(request):
+    type_param = request.GET.get('type')
+    print(type_param)
+    if type_param == 'bitiruvchilar':
+        graduates = Graduate.objects.filter(status='active')
+        ctx = {'graduates': graduates}
+        return render(request, 'alumni/graduate_state.html',ctx)
+
+    elif type_param == 'ishsizlar':
+        graduates = Graduate.objects.filter(status='active')
+        ctx = {'graduates': graduates}
+        return render(request, 'alumni/graduate_state.html',ctx)
+    else:
+        graduates = Graduate.objects.filter(status='graduated')
+        ctx = {'graduates': graduates}
+        return render(request, 'alumni/graduate_state.html',ctx)
+
+
+
 
 
 def register_view(request):
@@ -236,6 +257,12 @@ def register_view(request):
     return render(request, 'registration/register.html')
 
 
+def companies_view(request):
+    companies = Company.objects.all()
+    ctx = {
+        'companies': companies
+    }
+    return render(request, 'alumni/companies_list.html', ctx)
 
 def login_view(request):
     if request.method == 'POST':

@@ -1,0 +1,56 @@
+{% extends "alumni/base.html" %}
+{% load static %}
+
+{% block title %}
+{% if graduetes.0.status == 'active' %}
+Bitiruvchilar haqida malumot
+{% else %}
+Ishga kirganlar haqida malumot
+{% endif %}
+{% endblock %}
+{% block content %}
+ <div id="graduateResults">
+            <div class="row" id="graduateCards">
+                {% for graduate in graduates %}
+                    <div class="col-md-4 mb-4 graduate-card">
+                        <div class="card shadow-sm border-0 text-center" style="width: 26rem;">
+                            <img src="{{ graduate.image.url }}" class="card-img-top" alt="{{ graduate.first_name }} {{ graduate.last_name }}">
+                           <div class="card-body">
+                                <h5 class="card-title text-primary fw-bold">{{ graduate.first_name }} {{ graduate.last_name }}</h5>
+                                <p class="card-text d-flex align-items-center">
+                                    <i class="bi bi-mortarboard-fill me-2 text-secondary"></i>
+                                    <span>{{ graduate.faculty }}</span>
+                                </p>
+                                <p class="card-text d-flex align-items-center">
+                                    <i class="bi bi-bar-chart-line-fill me-2 text-success"></i>
+                                    <span>GPA: {{ graduate.academic_score }}</span>
+                                </p>
+                                <p class="card-text d-flex align-items-center">
+                                    <i class="bi bi-person-check-fill me-2 text-info"></i>
+                                    {% if graduate.status == 'active' %}
+                                    <span>Holati: O'qiyapti</span>
+                                    {% elif  graduate.status == 'graduated' %}
+                                    <span>Holati: Bitirgan</span>
+                                    {% elif graduate.status == 'expelled' %}
+                                    <span>Holati: Haydalgan</span>
+                                    {% endif %}
+
+                                </p>
+                                <p class="card-text d-flex align-items-center">
+                                    <i class="bi bi-calendar-check-fill me-2 text-warning"></i>
+                                    <span>Tugatgan yili: {{ graduate.completed_year }}</span>
+                                </p>
+                            </div>
+
+                            <div class="card-footer bg-white border-0 pb-3">
+                                <a href="{% url 'graduate_detail' graduate.id %}" class="btn btn-primary w-75">Batafsil</a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <h3 class="text-center">No Graduate</h3>
+                {% endfor %}
+            </div>
+        </div>
+
+{% endblock content %}
