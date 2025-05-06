@@ -19,7 +19,7 @@ Hamkorlar
                     <div class="row mb-3">
                         <div class="col-sm-4 text-muted">Email:</div>
                         <div class="col-sm-8">
-                            <a href="mailto:{{ company.contact_email }}">{{ company.contact_email }}</a>
+                            <a style="text-decoration: none;"  href="mailto:{{ company.contact_email }}">{{ company.contact_email }}</a>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -29,13 +29,13 @@ Hamkorlar
                     <div class="row mb-3">
                         <div class="col-sm-4 text-muted">Telefon:</div>
                         <div class="col-sm-8">
-                            <a href="tel:{{ company.phone_number }}">{{ company.phone_number }}</a>
+                            <a style="text-decoration: none;"  href="tel:{{ company.phone_number }}">{{ company.phone_number }}</a>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-sm-4 text-muted">Vebsayt:</div>
                         <div class="col-sm-8">
-                            <a href="{{ company.website }}" target="_blank">{{ company.website }}</a>
+                            <a style="text-decoration: none;" href="{{ company.website }}" target="_blank">{{ company.sector }}</a>
                         </div>
                     </div>
                     <!--            <div class="row">-->

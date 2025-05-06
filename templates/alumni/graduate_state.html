@@ -9,27 +9,47 @@ Ishga kirganlar haqida malumot
 {% endif %}
 {% endblock %}
 {% block content %}
+
+
 <style>
-    .row{
+    .row {
         margin-top: 10px;
         display: grid;
         grid-template-columns: 30% 30% 30%;
+        gap: 15px;
         text-align: center;
         align-items: center;
         justify-content: center;
     }
-    .row .graduate-card{
+
+    .row .graduate-card {
+        width: 90%;
         margin: 0 auto;
-        width: 18rem;
+        margin-top: 15px;
+        padding-top: 15px;
     }
-    .graduate-card img{
+
+    .graduate-card img {
         margin-top: 10px;
         width: 150px;
         height: 150px;
         margin: 0 auto;
-        margin-top: 10px;
-        margin-bottom: 10px;
         border-radius: 50%;
+    }
+    .col-md-4{
+        text-align: center;
+    }
+    .col-md-4 input{
+        padding: 7px;
+        border-radius: 7px 10px;
+        border: none;
+        caret-color: blue;
+        box-shadow: 0 0 3px gray;
+        outline: none;
+        text-align: center;
+    }
+    .hidden{
+        display: none;
     }
 </style>
  <div id="graduateResults">

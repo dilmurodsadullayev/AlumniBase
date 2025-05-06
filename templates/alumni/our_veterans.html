@@ -1,0 +1,134 @@
+{% extends 'alumni/base.html' %}
+{% load static %}
+{% block title %} Bizning Faxriylar{% endblock title %}
+
+{% block content %}
+
+<style>
+    .row {
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: 30% 30% 30%;
+        gap: 15px;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .graduate-card {
+        width: 90%;
+        margin: 0 auto;
+        margin-top: 15px;
+        padding-top: 15px;
+    }
+
+    .graduate-card img {
+        margin-top: 10px;
+        width: 150px;
+        height: 150px;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
+
+    .col-md-4 {
+        text-align: center;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+
+<div class="d-flex" id="wrapper">
+    <div class="container-fluid p-4">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8 ml-2 mb-2">
+                    <h2>Faxrli ustozlar</h2>
+                </div>
+            </div>
+        </div>
+
+        <div id="graduateResults">
+            <div class="row" id="graduateCards"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const f_array = {
+        0: {
+            title: "Khalmuratov Omonboy Otamuratovich",
+            phone: "+99862 224-61-45",
+            email: "omonboy.khalmuratov@ubtuit.uz",
+            imgUrl: "https://www.ubtuit.uz/storage/photos/omon.png",
+            url: "https://www.ubtuit.uz/department/deputy-director-of-academic-affairs"
+        },
+        1: {
+            title: "Matyokubov O'tkir Karimovich",
+            phone: "+998 99 968-80-06",
+            email: "utkir.matyokubov@ubtuit.uz",
+            imgUrl: "https://www.ubtuit.uz/storage/departments/SzwUKQJ2fby3UofHW2FweAswEspAlixjICU0yLw7.jpg",
+            url: "https://www.ubtuit.uz/department/first-deputy-director-for-youth-issues-and-spiritual-and-educational-works"
+        },
+        2: {
+            title: "Allamov Oybek Turaboyevich",
+            phone: "(8 362) 224-61-34",
+            email: "info@ubtuit.uz",
+            imgUrl: "https://www.ubtuit.uz/storage/departments/WAn5hKWCBftJW9tL7T9dklbpAtuYBaxKRskFGxdw.png",
+            url: "https://www.ubtuit.uz/department/deputy-director-for-scientific-works-and-innovations"
+        },
+        3: {
+            title: "Khojayev Otabek Kadambayevich",
+            phone: "+998 97 513-27-86",
+            email: "otabek.khujaev@ubtuit.uz",
+            imgUrl: "https://www.ubtuit.uz/storage/departments/4W0t8ebFLPqUDPB2WeUR77bsatNXPGpBE8abYxyK.jpg",
+            url: "https://www.ubtuit.uz/department/department-of-information-technologies"
+        },
+        4: {
+            title: "Xo'jamuratov Bekmurod Xo'jamurot o'g'li",
+            phone: "+998 97 791-38-83",
+            email: "bekmurod.khujamuratov@ubtuit.uz",
+            imgUrl: "https://www.ubtuit.uz/storage/departments/VLoTMP64F2r8NOotZrIBdE5zdYtd3EI4BMWl0Y11.jpg",
+            url: "https://www.ubtuit.uz/department/department-of-software-engineering"
+        },
+        5: {
+            title: "Xojiboyev Jonibek Maxmudjonovich",
+            phone: "+998 99 968-87-06",
+            email: "jonibekxojiboyev@gmail.com",
+            imgUrl: "https://scontent.ftas1-2.fna.fbcdn.net/v/t39.30808-6/473014499_569003256114695_1053424229295460344_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_ohc=4hclb79zkfwQ7kNvwGUFiEf&_nc_oc=AdnSJ4_d8VO6k9lWyEnzWHdFlIUDNT0vpA27oAIgVxuP0DocDS0RKO1yyxgnVlyOfoU&_nc_zt=23&_nc_ht=scontent.ftas1-2.fna&_nc_gid=JffmL_VUEB0nDnEdDnU-9g&oh=00_AfJGnfixmk2Z639vu9AWI_rl4pSDMmer4wuG7ObKiK7vAQ&oe=681FC477",
+            url: "https://www.facebook.com/100090150763568/photos/133954422952916/"
+        }
+    }
+
+    // Function to generate HTML
+    const generateHTML = (data) => {
+        return Object.values(data).map(person => `
+            <div class="col-12 col-sm-6 col-lg-4 mb-4 graduate-card">
+                <div class="card shadow-sm border-0 h-100 text-center shadow-lg p-3">
+                    <img src="${person.imgUrl}" class="card-img-top img-fluid" alt="${person.title}">
+                    <div class="card-body d-flex flex-column border-1 border-top border-left border-bottom border-right mt-2">
+                        <h5 class="card-title text-primary fw-bold">${person.title}</h5>
+                        <p class="card-text d-flex align-items-center justify-content-center">
+                            <i class="bi bi-mortarboard-fill me-2 text-secondary"></i>
+                            <span>Phone: ${person.phone}</span>
+                        </p>
+                        <p class="card-text d-flex align-items-center justify-content-center">
+                            <i class="bi bi-bar-chart-line-fill me-2 text-success"></i>
+                            <span>Email: <a href="mailto:${person.email}">${person.email}</a></span>
+                        </p>
+                    </div>
+                    <div class="card-footer bg-white border-0 pb-3">
+                        <a href="${person.url}" target="_blank" class="btn btn-primary w-75">Batafsil</a>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    };
+
+    // Insert the generated HTML into a specific element
+    document.getElementById('graduateCards').innerHTML = generateHTML(f_array);
+
+</script>
+
+{% endblock content %}

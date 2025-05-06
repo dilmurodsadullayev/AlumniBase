@@ -272,6 +272,14 @@ def companies_view(request):
     }
     return render(request, 'alumni/companies_list.html', ctx)
 
+
+def our_veterans_view(request):
+    ctx = {
+
+    }
+
+    return render(request, 'alumni/our_veterans.html', ctx)
+
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
