@@ -5,47 +5,49 @@ Hamkorlar
 {% endblock %}
 {% block content %}
 <div class="container mt-5">
-    {% for company in companies %}
-    <div class="card shadow-lg mb-3 bg-white rounded">
-        <div class="card-header bg-primary text-white">
-            <h3 class="mb-0">{{ company.name }}</h3>
-        </div>
-        <div class="card-body">
-            <div class="row mb-3">
-                <div class="col-sm-4 text-muted">Sektor:</div>
-                <div class="col-sm-8">{{ company.sector }}</div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-sm-4 text-muted">Email:</div>
-                <div class="col-sm-8">
-                    <a href="mailto:{{ company.contact_email }}">{{ company.contact_email }}</a>
+    <div class="row">
+        {% for company in companies %}
+            <div class="card col-sm-6 mb-3 rounded" style="outline: none;border: none;">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">{{ company.name }}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Sektor:</div>
+                        <div class="col-sm-8">{{ company.sector }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Email:</div>
+                        <div class="col-sm-8">
+                            <a href="mailto:{{ company.contact_email }}">{{ company.contact_email }}</a>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Manzil:</div>
+                        <div class="col-sm-8">{{ company.location }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Telefon:</div>
+                        <div class="col-sm-8">
+                            <a href="tel:{{ company.phone_number }}">{{ company.phone_number }}</a>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Vebsayt:</div>
+                        <div class="col-sm-8">
+                            <a href="{{ company.website }}" target="_blank">{{ company.website }}</a>
+                        </div>
+                    </div>
+                    <!--            <div class="row">-->
+                    <!--                <div class="col-sm-4 text-muted">Qo'shilgan vaqti:</div>-->
+                    <!--                <div class="col-sm-8">{{ company.timestamp|date:"d-m-Y H:i" }}</div>-->
+                    <!--            </div>-->
                 </div>
             </div>
-            <div class="row mb-3">
-                <div class="col-sm-4 text-muted">Manzil:</div>
-                <div class="col-sm-8">{{ company.location }}</div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-sm-4 text-muted">Telefon:</div>
-                <div class="col-sm-8">
-                    <a href="tel:{{ company.phone_number }}">{{ company.phone_number }}</a>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-sm-4 text-muted">Vebsayt:</div>
-                <div class="col-sm-8">
-                    <a href="{{ company.website }}" target="_blank">{{ company.website }}</a>
-                </div>
-            </div>
-<!--            <div class="row">-->
-<!--                <div class="col-sm-4 text-muted">Qo'shilgan vaqti:</div>-->
-<!--                <div class="col-sm-8">{{ company.timestamp|date:"d-m-Y H:i" }}</div>-->
-<!--            </div>-->
-        </div>
+            {% empty %}
+            <h4 class="text-center">No Company</h4>
+        {% endfor %}
     </div>
-    {% empty %}
-    <h4 class="text-center">No Company</h4>
-    {% endfor %}
 </div>
 
 {% endblock content %}

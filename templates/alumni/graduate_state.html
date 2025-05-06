@@ -9,13 +9,37 @@ Ishga kirganlar haqida malumot
 {% endif %}
 {% endblock %}
 {% block content %}
+<style>
+    .row{
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: 30% 30% 30%;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+    .row .graduate-card{
+        margin: 0 auto;
+        width: 18rem;
+    }
+    .graduate-card img{
+        margin-top: 10px;
+        width: 150px;
+        height: 150px;
+        margin: 0 auto;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-radius: 50%;
+    }
+</style>
  <div id="graduateResults">
-            <div class="row" id="graduateCards">
+    <div class="container-fluid">
+            <div class="row text-center" id="graduateCards">
                 {% for graduate in graduates %}
                     <div class="col-md-4 mb-4 graduate-card">
-                        <div class="card shadow-sm border-0 text-center" style="width: 26rem;">
+                        <div class="card shadow-lg border-0 text-center">
                             <img src="{{ graduate.image.url }}" class="card-img-top" alt="{{ graduate.first_name }} {{ graduate.last_name }}">
-                           <div class="card-body">
+                           <div class="card-body border-1 border-top border-bottom">
                                 <h5 class="card-title text-primary fw-bold">{{ graduate.first_name }} {{ graduate.last_name }}</h5>
                                 <p class="card-text d-flex align-items-center">
                                     <i class="bi bi-mortarboard-fill me-2 text-secondary"></i>
@@ -52,5 +76,6 @@ Ishga kirganlar haqida malumot
                 {% endfor %}
             </div>
         </div>
+    </div>
 
 {% endblock content %}

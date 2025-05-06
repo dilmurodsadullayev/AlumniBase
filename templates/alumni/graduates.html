@@ -3,66 +3,108 @@
 {% block title %} Bitiruvchilar ro'yxati{% endblock title %}
 
 {% block content %}
+
+
+<style>
+    .row {
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: 30% 30% 30%;
+        gap: 15px;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .row .graduate-card {
+        width: 90%;
+        margin: 0 auto;
+        margin-top: 15px;
+        padding-top: 15px;
+    }
+
+    .graduate-card img {
+        margin-top: 10px;
+        width: 150px;
+        height: 150px;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
+    .col-md-4{
+        text-align: center;
+    }
+    .col-md-4 input{
+        padding: 7px;
+        border-radius: 7px 10px;
+        border: none;
+        caret-color: blue;
+        box-shadow: 0 0 3px gray;
+        outline: none;
+        text-align: center;
+    }
+    .hidden{
+        display: none;
+    }
+</style>
 <div class="d-flex" id="wrapper">
     <div class="container-fluid p-4">
-        <div class="row">
-            <div class="col-12 d-flex justify-content-between align-items-center mb-4">
-                <h2>Foydalanuvchilar</h2>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12 col-md-6 mb-2">
-                <input type="text" class="form-control" name="name" id="nameSearch" placeholder="Ism bo‘yicha qidirish...">
-            </div>
-            <div class="col-12 col-md-6 mb-2">
-                <input type="text" class="form-control" name="faculty" id="facultySearch" placeholder="Yo‘nalish bo‘yicha qidirish...">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 ml-2 mb-2">
+                    <h2>Foydalanuvchilar</h2>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4 mb-2">
+                    <input type="text" class="" name="name" id="searchInput" onkeyup="searchCards()" placeholder="Qidiruv..." />
+                </div>
             </div>
         </div>
 
         <div id="graduateResults">
             <div class="row" id="graduateCards">
                 {% for graduate in graduates %}
-                    <div class="col-12 col-sm-6 col-lg-4 mb-4 graduate-card">
-                        <div class="card shadow-sm border-0 h-100 text-center">
-                            {% if graduate.image %}
-                            <img src="{{ graduate.image.url }}" class="card-img-top img-fluid" alt="{{ graduate.first_name }} {{ graduate.last_name }}">
-                            {% else %}
-                            <img src="{% static 'images/user.png' %}" class="card-img-top img-fluid" alt="{{ graduate.first_name }} {{ graduate.last_name }}">
-                            {% endif %}
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title text-primary fw-bold">{{ graduate.first_name }} {{ graduate.last_name }}</h5>
-                                <p class="card-text d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-mortarboard-fill me-2 text-secondary"></i>
-                                    <span>{{ graduate.faculty }}</span>
-                                </p>
-                                <p class="card-text d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-bar-chart-line-fill me-2 text-success"></i>
-                                    <span>GPA: {{ graduate.academic_score }}</span>
-                                </p>
-                                <p class="card-text d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-person-check-fill me-2 text-info"></i>
-                                    {% if graduate.status == 'active' %}
-                                    <span>Holati: O'qiyapti</span>
-                                    {% elif  graduate.status == 'graduated' %}
-                                    <span>Holati: Bitirgan</span>
-                                    {% elif graduate.status == 'expelled' %}
-                                    <span>Holati: Haydalgan</span>
-                                    {% endif %}
-                                </p>
-                                <p class="card-text d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-calendar-check-fill me-2 text-warning"></i>
-                                    <span>Tugatgan yili: {{ graduate.completed_year }}</span>
-                                </p>
-                            </div>
+                <div class="col-12 col-sm-6 col-lg-4 mb-4 graduate-card searching__cards">
+                    <div class="card shadow-sm border-0 h-100 text-center">
+                        {% if graduate.image %}
+                        <img src="{{ graduate.image.url }}" class="card-img-top img-fluid"
+                            alt="{{ graduate.first_name }} {{ graduate.last_name }}">
+                        {% else %}
+                        <img src="{% static 'images/user.png' %}" class="card-img-top img-fluid"
+                            alt="{{ graduate.first_name }} {{ graduate.last_name }}">
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-primary fw-bold">{{ graduate.first_name }} {{ graduate.last_name }}</h5>
+                            <p class="card-text d-flex align-items-center justify-content-center">
+                                <i class="bi bi-mortarboard-fill me-2 text-secondary"></i>
+                                <span>{{ graduate.faculty }}</span>
+                            </p>
+                            <p class="card-text d-flex align-items-center justify-content-center">
+                                <i class="bi bi-bar-chart-line-fill me-2 text-success"></i>
+                                <span>GPA: {{ graduate.academic_score }}</span>
+                            </p>
+                            <p class="card-text d-flex align-items-center justify-content-center">
+                                <i class="bi bi-person-check-fill me-2 text-info"></i>
+                                {% if graduate.status == 'active' %}
+                                <span>Holati: O'qiyapti</span>
+                                {% elif graduate.status == 'graduated' %}
+                                <span>Holati: Bitirgan</span>
+                                {% elif graduate.status == 'expelled' %}
+                                <span>Holati: Haydalgan</span>
+                                {% endif %}
+                            </p>
+                            <p class="card-text d-flex align-items-center justify-content-center">
+                                <i class="bi bi-calendar-check-fill me-2 text-warning"></i>
+                                <span>Tugatgan yili: {{ graduate.completed_year }}</span>
+                            </p>
+                        </div>
 
-                            <div class="card-footer bg-white border-0 pb-3">
-                                <a href="{% url 'graduate_detail' graduate.id %}" class="btn btn-primary w-75">Batafsil</a>
-                            </div>
+                        <div class="card-footer bg-white border-0 pb-3">
+                            <a href="{% url 'graduate_detail' graduate.id %}" class="btn btn-primary w-75">Batafsil</a>
                         </div>
                     </div>
+                </div>
                 {% empty %}
-                    <h3 class="text-center">No Graduate</h3>
+                <h3 class="text-center">No Graduate</h3>
                 {% endfor %}
             </div>
         </div>
@@ -70,66 +112,21 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const nameInput = document.getElementById('nameSearch');
-    const facultyInput = document.getElementById('facultySearch');
-    const graduateCards = document.getElementById('graduateCards');
+    function searchCards() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.searching__cards');
 
-    function fetchResults() {
-        const name = nameInput.value.trim();
-        const faculty = facultyInput.value.trim();
+            cards.forEach(card => {
+                const title = card.querySelector('h5').innerText.toLowerCase();
+                const department = card.querySelector('p').innerText.toLowerCase();
 
-        fetch(`/graduate-search-ajax/?name=${encodeURIComponent(name)}&faculty=${encodeURIComponent(faculty)}`)
-            .then(response => response.json())
-            .then(data => {
-                let html = '';
-                if (data.length === 0) {
-                    html = '<h3 class="text-center">Natija topilmadi.</h3>';
+                if (title.includes(input) || department.includes(input)) {
+                    card.classList.remove('hidden');
                 } else {
-                    data.forEach(graduate => {
-                        html += `
-                            <div class="col-12 col-sm-6 col-lg-4 mb-4 graduate-card">
-                                <div class="card shadow-sm border-0 h-100 text-center">
-                                    <img src="${graduate.image_url ? graduate.image_url : '/static/images/user.png'}"
-                                         class="card-img-top img-fluid"
-                                         alt="${graduate.first_name} ${graduate.last_name}">
-                                         <div class="card-body d-flex flex-column">
-                                        <h5 class="card-title text-primary fw-bold">${graduate.first_name} ${graduate.last_name}</h5>
-                                        <p class="card-text d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-mortarboard-fill me-2 text-secondary"></i>
-                                            <span>${graduate.faculty_name}</span>
-                                        </p>
-                                        <p class="card-text d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-bar-chart-line-fill me-2 text-success"></i>
-                                            <span>GPA: ${graduate.academic_score}</span>
-                                        </p>
-                                        <p class="card-text d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-person-check-fill me-2 text-info"></i>
-                                            <span>Status: ${graduate.status}</span>
-                                        </p>
-                                        <p class="card-text d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-calendar-check-fill me-2 text-warning"></i>
-                                            <span>Tugatgan yili: ${graduate.completed_year}</span>
-                                        </p>
-                                    </div>
-                                    <div class="card-footer bg-white border-0 pb-3">
-                                        <a href="/graduate/${graduate.id}/" class="btn btn-primary w-75">Batafsil</a>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    });
+                    card.classList.add('hidden');
                 }
-                graduateCards.innerHTML = html;
-            })
-            .catch(error => {
-                console.error('Xatolik:', error);
             });
-    }
-
-    nameInput.addEventListener('input', fetchResults);
-    facultyInput.addEventListener('input', fetchResults);
-});
+        }
 </script>
 
 {% endblock content %}
