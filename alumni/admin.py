@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Faculty, Graduate, Company, EmploymentData, GraduateContact, Contact
+from .models import Faculty, Graduate, Company, EmploymentData, GraduateContact, Contact, Statistic
 
 
 # Faculty model admin
@@ -40,3 +40,4 @@ class GraduateContactAdmin(admin.ModelAdmin):
 
 admin.site.register(GraduateContact, GraduateContactAdmin)
 admin.site.register(Contact)
+admin.site.register(Statistic)

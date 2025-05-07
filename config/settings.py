@@ -27,7 +27,7 @@ import os
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # DEBUG = os.getenv("DEBUG")
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -71,7 +71,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 # "job.context_processors.base_translations",
-                'alumni.context_processors.dashboard',
+                # 'alumni.context_processors.dashboard',
             ],
         },
     },

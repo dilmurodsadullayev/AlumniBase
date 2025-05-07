@@ -9,9 +9,10 @@ from django.views.generic import DetailView
 from django.db.models import Q
 
 from alumni.forms import RegistrationForm
-from alumni.models import Graduate, EmploymentData, Company, Contact
+from alumni.models import Graduate, EmploymentData, Company, Contact, Statistic
 from django.core.mail import send_mail
 from django.contrib import messages
+
 
 # Create your views here.
 
@@ -298,6 +299,30 @@ def login_view(request):
         form = AuthenticationForm()
 
     return render(request, 'registration/login.html')
+
+
+def yearly_statistics(request):
+    # Yilni olish (default qiymat sifatida 2025 ni oling)
+    year = request.GET.get('year', 2025)  # Yilni olish (agar yil berilmasa, 2025 bo'ladi)
+    try:
+        year = int(year)  # Yilni int ga aylantirish
+    except ValueError:
+        return JsonResponse({'error': 'Yil noto‘g‘ri formatda kiritilgan'}, status=400)
+
+    # Yilga mos statistikalarni olish
+    statistics = Statistic.objects.filter(year=year)
+
+    # Statistikani JSON formatida saqlash
+    statistics_data = []
+    for stat in statistics:
+        statistics_data.append({
+            'year': stat.year,  # Yil
+            'sum_number': stat.sum_number,  # Summa
+            'self_field': stat.self_field,  # O'z soha
+        })
+
+    # JSON formatida qaytish
+    return JsonResponse({'statistika': statistics_data})
 
 def custom_404(request, exception):
     return render(request, '404.html', status=404)

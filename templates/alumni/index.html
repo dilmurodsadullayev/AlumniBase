@@ -89,16 +89,28 @@
         </div>
     </div>
 
-    <div class="card shadow-sm mb-4">
-        <div class="card-body">
-            <h2 class="mb-4 text-center">2025 yil bo'yicha umumiy ko'rsatkichlar</h2>
-            <div class="row justify-content-center">
-                <div class="col-md-4">
-                    <canvas id="employmentChart"></canvas>
-                </div>
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h2 class="mb-4 text-center">Yillik ko'rsatkichlar</h2>
+
+        <!-- YIL FILTERI -->
+        <div class="mb-3 text-start">
+            <label for="yearFilter" class="form-label">Yilni tanlang:</label>
+            <select id="yearFilter" class="form-select" onchange="updateChart()">
+                <!-- Yilni qo'shganingizni unutmaslik kerak -->
+                <option value="2024">2024</option>
+                <option value="2025" selected>2025</option>
+            </select>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <canvas id="employmentChart"></canvas>
             </div>
         </div>
     </div>
+</div>
+
 
     <div class="card shadow-sm mb-4">
        <div class="card-body">
@@ -143,8 +155,76 @@
 
 </div>
 
-
+    </div>
     </div>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    let chart;
+
+    // Grafikni yangilash funksiyasi
+    function updateChart() {
+        const selectedYear = document.getElementById('yearFilter').value;
+
+        fetch(`/yearly-statistics/?year=${selectedYear}`)
+            .then(response => response.json())
+            .then(data => {
+                const years = data.statistika.map(stat => stat.year);
+                const sumNumbers = data.statistika.map(stat => stat.sum_number);
+                const selfFields = data.statistika.map(stat => stat.self_field);
+                const unemployed = data.statistika.map(stat => stat.unemployed); // Ishsizlar soni
+
+                // Agar chart mavjud bo'lsa, uni yangilash
+                if (chart) {
+                    chart.destroy();
+                }
+
+                // Chart.js orqali yangi grafikni yaratish
+                const ctx = document.getElementById('employmentChart').getContext('2d');
+                chart = new Chart(ctx, {
+                    type: 'bar', // Grafik turi
+                    data: {
+                        labels: years, // Yillar
+                        datasets: [{
+                            label: 'Hammasini Soni',
+                            data: sumNumbers, // Summa sonlari
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }, {
+                            label: 'O\'z sohalarining ishlaydigan',
+                            data: selfFields, // O'z sohalari soni
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        }, {
+                            label: 'Ishsizlar soni', // Ishsizlar soni
+                            data: unemployed, // Ishsizlar soni
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Xatolik:', error));
+    }
+
+    // Dastlabki yilni ko'rsatish
+    updateChart();
+</script>
+
+
+
+
+
+
 {% endblock content %}

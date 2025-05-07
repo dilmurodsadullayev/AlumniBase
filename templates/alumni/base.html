@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="{% static 'images/logo_ubtuit.png' %}" type="image/x-icon">
+  <link rel="icon" href="{% static 'images/logo_ubtuit.png' %}" type="image/x-icon">
   <title>{% block title %} {% endblock title %}</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -84,14 +84,18 @@
         <i class="fa-solid fa-user-plus"></i> Register
       </a>
       {% endif %}
-
-
     </div>
   </nav>
 
       {% block content %}
       {% endblock content %}
-       </div>
+
+      <!-- Footer section with company info -->
+      <footer class="bg-dark text-white text-center py-3">
+          <p class="mb-0">© 2025 Muhammad Al-Xorazmiy Nomidagi Toshkent Axborot Texnologiyalari Universiteti Urganch Filiali. Barcha huquqlar himoyalangan.</p>
+      </footer>
+
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -104,37 +108,6 @@
     wrapper.classList.toggle('toggled');
   });
 </script>
-<script>
-  const ctx = document.getElementById('employmentChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ['Ishga joylashganlar', 'Ishsizlar'],
-      datasets: [{
-        label: 'Foizda',
-        data: [{{ ishlayotganlar_soni }}, {{ ishsizlar_soni }}],
-        backgroundColor: [
-          '#28a745', // green
-          '#dc3545'  // red
-        ],
-        borderColor: [
-          '#ffffff',
-          '#ffffff'
-        ],
-        borderWidth: 2
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'bottom',
-        }
-      }
-    }
-  });
-</script>
-
 
 </body>
 </html>
